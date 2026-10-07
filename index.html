@@ -1,238 +1,1013 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zakaria Khausar Rahman | D4 Informatika TRPL</title>
-    <meta
-      name="description"
-      content="Portfolio website of Zakaria Khausar Rahman, a D4 Informatika student majoring in TRPL."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="bg-grid"></div>
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a href="#home" class="brand" aria-label="Zakaria Khausar Rahman homepage">
-          <span class="brand-mark">Z</span>
-          <span>Zakaria</span>
-        </a>
+<html lang="id">
 
-        <nav class="main-nav" aria-label="Main navigation">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </nav>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>Profil Zakaria</title>
 
-        <a href="#contact" class="nav-cta">Let’s Talk</a>
-      </div>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif
+    }
+
+    body {
+      overflow-x: hidden
+    }
+
+    button,
+    a {
+      font: inherit
+    }
+
+    button {
+      border: 0
+    }
+
+    #starCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: #000
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 12px calc(100px + env(safe-area-inset-bottom))
+    }
+
+    header {
+      text-align: center
+    }
+
+    h1 {
+      font-size: clamp(1.35rem, 5vw, 1.8rem);
+      margin-bottom: 6px
+    }
+
+    header div {
+      font-size: 13px;
+      opacity: .78
+    }
+
+    .slideshow-wrap {
+      position: relative;
+      width: min(92vw, 420px);
+      height: min(82vh, 747px);
+      min-height: 280px;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #050505;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, .75);
+      margin: 0 auto;
+      touch-action: pan-y;
+      isolation: isolate
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .35s ease;
+      cursor: pointer;
+      background: #000
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: #000;
+      user-select: none;
+      -webkit-user-drag: none
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .32), transparent 16%, transparent 78%, rgba(0, 0, 0, .42))
+    }
+
+    .caption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 3;
+      background: rgba(0, 0, 0, .55);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      backdrop-filter: blur(5px)
+    }
+
+    .progress-container {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      height: 3px;
+      display: flex;
+      gap: 3px;
+      z-index: 5
+    }
+
+    .progress-item {
+      position: relative;
+      flex: 1;
+      height: 100%;
+      background: rgba(255, 255, 255, .3);
+      border-radius: 99px;
+      overflow: hidden
+    }
+
+    .progress-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      background: #fff
+    }
+
+    .progress-item.active::after {
+      animation: progressFill var(--slide-ms) linear forwards
+    }
+
+    @keyframes progressFill {
+      to {
+        transform: scaleX(1)
+      }
+    }
+
+    .instagram-link {
+      margin-top: 2px;
+      margin-bottom: 18px
+    }
+
+    .instagram-link a {
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+      padding: 11px 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      box-shadow: 0 5px 20px rgba(214, 41, 118, .3);
+      transition: transform .2s ease, filter .2s ease
+    }
+
+    .instagram-link a:hover {
+      transform: scale(1.04);
+      filter: brightness(1.08)
+    }
+
+    #biodataBtn,
+    #musicBtn {
+      position: fixed;
+      bottom: max(15px, env(safe-area-inset-bottom));
+      background: rgba(8, 8, 8, .82);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .2);
+      padding: 10px 14px;
+      border-radius: 50px;
+      cursor: pointer;
+      z-index: 10020;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, .4);
+      transition: background .2s, transform .2s
+    }
+
+    #biodataBtn:hover,
+    #musicBtn:hover {
+      background: rgba(0, 188, 212, .82);
+      transform: translateY(-2px)
+    }
+
+    #biodataBtn {
+      right: 20px
+    }
+
+    #musicBtn {
+      left: 20px
+    }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .97);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      touch-action: none
+    }
+
+    .viewer.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto
+    }
+
+    .viewer-img {
+      max-width: 94vw;
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      cursor: grab;
+      border-radius: 8px;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition: transform .2s ease, opacity .15s ease
+    }
+
+    .viewer-img.dragging {
+      cursor: grabbing;
+      transition: none
+    }
+
+    .viewer-close,
+    .viewer-nav {
+      position: absolute;
+      background: rgba(0, 0, 0, .58);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .2);
+      cursor: pointer;
+      z-index: 10010;
+      display: grid;
+      place-items: center;
+      backdrop-filter: blur(7px)
+    }
+
+    .viewer-close {
+      top: 18px;
+      right: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 18px
+    }
+
+    .viewer-nav {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 27px
+    }
+
+    .viewer-prev {
+      left: 18px
+    }
+
+    .viewer-next {
+      right: 18px
+    }
+
+    .viewer-instruct {
+      position: absolute;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, .5);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10010
+    }
+
+    #biodataPopup {
+      position: fixed;
+      bottom: 78px;
+      right: 20px;
+      background: rgba(5, 5, 5, .94);
+      z-index: 10030;
+      padding: 20px;
+      border: 1px solid rgba(0, 188, 212, .3);
+      border-radius: 16px;
+      max-width: 340px;
+      width: calc(100% - 40px);
+      box-shadow: 0 0 25px rgba(0, 188, 212, .28);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(15px) scale(.98);
+      transition: opacity .25s ease, transform .25s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px)
+    }
+
+    #biodataPopup.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1)
+    }
+
+    #biodataPopup h2 {
+      margin-bottom: 13px
+    }
+
+    #biodataPopup p {
+      margin-bottom: 8px;
+      line-height: 1.5;
+      font-size: 14px
+    }
+
+    #biodataPopup ul {
+      margin: 5px 0 0 20px;
+      line-height: 1.7;
+      font-size: 14px
+    }
+
+    #biodataPopup .closePopupBtn {
+      margin-top: 15px;
+      background: #00bcd4;
+      padding: 9px 16px;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 600
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 80px;
+      transform: translate(-50%, 20px);
+      background: rgba(20, 20, 20, .95);
+      border: 1px solid rgba(255, 255, 255, .15);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      z-index: 11000;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0)
+    }
+
+    @media(max-width:700px) {
+      #app {
+        padding-top: 15px
+      }
+
+      .slideshow-wrap {
+        width: min(94vw, 390px);
+        height: min(78vh, 690px)
+      }
+
+      .viewer-nav {
+        width: 44px;
+        height: 44px;
+        font-size: 21px
+      }
+
+      .viewer-prev {
+        left: 9px
+      }
+
+      .viewer-next {
+        right: 9px
+      }
+
+      .viewer-close {
+        width: 40px;
+        height: 40px;
+        top: 12px;
+        right: 12px
+      }
+
+      .viewer-instruct {
+        font-size: 11px;
+        max-width: 90%;
+        text-align: center
+      }
+
+      #musicBtn,
+      #biodataBtn {
+        padding: 9px 12px;
+        font-size: 12px
+      }
+
+      #musicBtn {
+        left: 10px
+      }
+
+      #biodataBtn {
+        right: 10px
+      }
+
+      #biodataPopup {
+        left: 10px;
+        right: 10px;
+        bottom: 62px;
+        width: auto;
+        max-width: none
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+  <div id="app">
+    <header>
+      <h1>Tugas Web Zakaria</h1>
+      <div>Klik gambar untuk memperbesar • Swipe untuk berpindah</div>
     </header>
 
-    <main id="home">
-      <section class="hero container">
-        <div class="hero-copy">
-          <p class="eyebrow">D4 Informatika • TRPL</p>
-          <h1>
-            I build <span>smart</span><br />
-            digital solutions.
-          </h1>
-          <p class="lead">
-            Hi, I’m Zakaria Khausar Rahman, a D4 Informatika student specializing in Teknologi Rekayasa Perangkat Lunak.
-            I’m passionate about software engineering, UI/UX, and building modern digital experiences.
-          </p>
+    <main class="slideshow-wrap" id="slideshow" aria-label="Galeri foto"></main>
 
-          <div class="hero-actions">
-            <a href="#projects" class="btn btn-primary">View Projects</a>
-            <a href="#contact" class="btn btn-secondary">Hire Me</a>
-          </div>
+    <div class="instagram-link">
+      <a href="https://www.instagram.com/stark_zkr?igsh=MTRvYnk1MTBjbDN5" target="_blank"
+        rel="noopener noreferrer">Kunjungi Instagram Saya</a>
+    </div>
 
-          <ul class="hero-metrics" aria-label="Key achievements">
-            <li>
-              <strong>3+</strong>
-              <span>Years Learning</span>
-            </li>
-            <li>
-              <strong>10+</strong>
-              <span>Mini Projects</span>
-            </li>
-            <li>
-              <strong>100%</strong>
-              <span>Growth Mindset</span>
-            </li>
-          </ul>
-        </div>
+    <audio id="bgMusic" loop preload="auto">
+      <source src="Maroon 5 - This Love [XPpTgCho5ZA].mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
-        <div class="hero-visual" aria-label="Futuristic profile card">
-          <div class="orb orb-one"></div>
-          <div class="orb orb-two"></div>
+  <div id="viewer" class="viewer" aria-hidden="true" role="dialog" aria-label="Viewer foto">
+    <button id="viewerClose" class="viewer-close" type="button" aria-label="Tutup viewer">✕</button>
+    <button id="viewerPrev" class="viewer-nav viewer-prev" type="button" aria-label="Foto sebelumnya">&#10094;</button>
+    <img id="viewerImg" class="viewer-img" src="" alt="Foto besar" draggable="false">
+    <button id="viewerNext" class="viewer-nav viewer-next" type="button" aria-label="Foto berikutnya">&#10095;</button>
+    <div class="viewer-instruct">Swipe / Drag • ← → • Esc</div>
+  </div>
 
-          <div class="profile-card glass">
-            <div class="profile-topline">
-              <span class="status-dot"></span>
-              <span>Open to collaboration</span>
-            </div>
+  <button id="musicBtn" type="button" aria-label="Kontrol musik">▶ Play Musik</button>
+  <button id="biodataBtn" type="button" aria-expanded="false" aria-controls="biodataPopup">Lihat Biodata</button>
 
-            <div class="profile-avatar-wrap">
-              <div class="profile-avatar">
-                <span>Z</span>
-              </div>
-            </div>
+  <div id="biodataPopup" role="dialog" aria-modal="false" aria-labelledby="biodataTitle">
+    <h2 id="biodataTitle">Biodata</h2>
+    <p><strong>Nama:</strong> ZAKARIA KHAUSAR RAHMAN</p>
+    <p><strong>Tempat Tanggal Lahir:</strong> BATAM, 15 MEI 2005</p>
+    <p><strong>Umur:</strong> 21 Tahun</p>
+    <p><strong>Hobi:</strong></p>
+    <ul>
+      <li>Bermain Bola / Futsal</li>
+      <li>Mendengarkan Musik</li>
+      <li>Bermain Gitar</li>
+      <li>Lari</li>
+      <li>Membaca</li>
+      <li>Begadng</li>
+    </ul>
+    <button class="closePopupBtn" type="button">Tutup</button>
+  </div>
 
-            <div class="profile-meta">
-              <p class="mini-label">Student Identity</p>
-              <h2>Zakaria Khausar Rahman</h2>
-            </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-            <div class="profile-stats">
-              <div>
-                <span>Program</span>
-                <strong>D4 Informatika</strong>
-              </div>
-              <div>
-                <span>Focus</span>
-                <strong>TRPL</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  <script>
+    "use strict";
 
-      <section id="about" class="about container section-space">
-        <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h2>Exploring technology, building impactful ideas.</h2>
-        </div>
+    /* =========================
+       DAFTAR GAMBAR
+    ========================= */
+    const IMAGES = [
+      'jack.jpeg',
+      'jack2.jpeg',
+      'jak3.jpeg'
+    ];
 
-        <div class="about-grid">
-          <div class="glass about-card">
-            <p>
-              I’m a D4 Informatika student majoring in Teknologi Rekayasa Perangkat Lunak, interested in full-stack development,
-              user experience, and software innovation. I like turning ideas into usable digital products through structured thinking,
-              clean code, and problem-solving.
-            </p>
-          </div>
+    const AUTOPLAY_DELAY = 3000;
+    const shuffled = shuffle(IMAGES);
 
-          <div class="stats-grid">
-            <div class="glass stat-box">
-              <strong>Software</strong>
-              <span>Development</span>
-            </div>
-            <div class="glass stat-box">
-              <strong>UI/UX</strong>
-              <span>Wireframing</span>
-            </div>
-            <div class="glass stat-box">
-              <strong>Problem</strong>
-              <span>Solving</span>
-            </div>
-            <div class="glass stat-box">
-              <strong>Learning</strong>
-              <span>Continuous</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    const slideshow = document.getElementById("slideshow");
+    const viewer = document.getElementById("viewer");
+    const viewerImg = document.getElementById("viewerImg");
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    const biodataPopup = document.getElementById("biodataPopup");
+    const biodataBtn = document.getElementById("biodataBtn");
+    const toast = document.getElementById("toast");
 
-      <section id="skills" class="skills container section-space">
-        <div class="section-heading">
-          <p class="eyebrow">Capabilities</p>
-          <h2>Technologies and skills I’m learning and using.</h2>
-        </div>
+    let slideIndex = 0;
+    let viewerIndex = 0;
+    let autoplayTimer = null;
+    let musicWanted = false;
+    let toastTimer = null;
 
-        <div class="skill-grid">
-          <article class="glass skill-card">
-            <div class="skill-icon">01</div>
-            <h3>Web</h3>
-            <p>HTML, CSS, JavaScript, responsive web design, frontend development.</p>
-          </article>
+    /* =========================
+       UTILITAS
+    ========================= */
+    function shuffle(array) {
+      const a = [...array];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
 
-          <article class="glass skill-card">
-            <div class="skill-icon">02</div>
-            <h3>Programming</h3>
-            <p>Core coding logic, problem solving, software design, clean architecture basics.</p>
-          </article>
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("show");
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
 
-          <article class="glass skill-card">
-            <div class="skill-icon">03</div>
-            <h3>UI/UX</h3>
-            <p>Wireframe design, user flow, visual hierarchy, and product-focused thinking.</p>
-          </article>
+    function setButtonLabel() {
+      musicBtn.textContent = music.paused ? "▶ Play Musik" : "⏸ Pause Musik";
+    }
 
-          <article class="glass skill-card">
-            <div class="skill-icon">04</div>
-            <h3>TRPL</h3>
-            <p>Software engineering approaches, development lifecycle, and reliable product building.</p>
-          </article>
-        </div>
-      </section>
+    /* =========================
+       PRELOAD GAMBAR
+    ========================= */
+    const imageCache = new Map();
 
-      <section id="projects" class="projects container section-space">
-        <div class="section-heading">
-          <p class="eyebrow">Selected work</p>
-          <h2>Projects reflecting my learning journey.</h2>
-        </div>
+    function preloadImage(src) {
+      if (imageCache.has(src)) return imageCache.get(src);
+      const img = new Image();
+      const promise = new Promise(resolve => {
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+      });
+      img.src = src;
+      imageCache.set(src, promise);
+      return promise;
+    }
+    shuffled.forEach((src, i) => {
+      if (i < 5) preloadImage(src);
+    });
 
-        <div class="project-grid">
-          <article class="glass project-card project-one">
-            <div class="project-overlay">
-              <span>Website</span>
-              <h3>Luxury Store</h3>
-              <p>Responsive storefront concept created with modern UI and product-focused layout.</p>
-            </div>
-          </article>
+    /* =========================
+       SLIDESHOW
+    ========================= */
+    const progressContainer = document.createElement("div");
+    progressContainer.className = "progress-container";
+    progressContainer.style.setProperty("--slide-ms", AUTOPLAY_DELAY + "ms");
 
-          <article class="glass project-card project-two">
-            <div class="project-overlay">
-              <span>Portfolio</span>
-              <h3>Personal Brand</h3>
-              <p>Futuristic portfolio page built to showcase identity, skills, and creative projects.</p>
-            </div>
-          </article>
+    shuffled.forEach((src, i) => {
+      const bar = document.createElement("div");
+      bar.className = "progress-item";
+      bar.setAttribute("aria-hidden", "true");
+      progressContainer.appendChild(bar);
 
-          <article class="glass project-card project-three">
-            <div class="project-overlay">
-              <span>Study Project</span>
-              <h3>Digital Product</h3>
-              <p>Concept project exploring software design, functionality, and user-centered development.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+      const slide = document.createElement("div");
+      slide.className = "slide";
+      slide.dataset.index = i;
 
-      <section class="cta container section-space">
-        <div class="glass cta-box">
-          <div>
-            <p class="eyebrow">Let’s grow</p>
-            <h2>Open to learning, collaboration, and impactful project opportunities.</h2>
-          </div>
-          <a href="#contact" class="btn btn-primary">Start a Project</a>
-        </div>
-      </section>
-    </main>
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = `Foto ${i+1} dari ${shuffled.length}`;
+      img.loading = i === 0 ? "eager" : "lazy";
+      img.decoding = "async";
+      img.draggable = false;
 
-    <footer id="contact" class="site-footer">
-      <div class="container footer-wrap">
-        <div>
-          <p class="eyebrow">Contact</p>
-          <h2>Let’s connect.</h2>
-        </div>
+      img.addEventListener("error", () => {
+        slide.classList.add("broken");
+        img.alt = `Foto ${i+1} tidak ditemukan`;
+        showToast(`Gambar tidak ditemukan: ${src}`);
+      });
 
-        <div class="contact-list">
-          <a href="mailto:zakaria@example.com">zakaria@example.com</a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://www.instagram.com" target="_blank" rel="noreferrer">Instagram</a>
-        </div>
-      </div>
-    </footer>
+      const caption = document.createElement("div");
+      caption.className = "caption";
+      caption.textContent = `${i+1} / ${shuffled.length}`;
 
-    <script src="script.js"></script>
-  </body>
+      slide.append(img, caption);
+      slide.addEventListener("click", e => {
+        if (slideIndex === i && !slide.dataset.swiped) openViewer(i);
+        delete slide.dataset.swiped;
+      });
+
+      slideshow.appendChild(slide);
+    });
+
+    slideshow.prepend(progressContainer);
+
+    const slides = [...document.querySelectorAll(".slide")];
+    const progressItems = [...document.querySelectorAll(".progress-item")];
+
+    function updateProgress() {
+      progressItems.forEach((item, i) => {
+        item.classList.toggle("active", i === slideIndex);
+      });
+    }
+
+    function showSlide(index, restart = true) {
+      if (!slides.length) return;
+      slideIndex = (index + slides.length) % slides.length;
+
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === slideIndex));
+      updateProgress();
+
+      /* Prioritaskan foto berikutnya agar perpindahan halus */
+      preloadImage(shuffled[(slideIndex + 1) % shuffled.length]);
+      if (restart) startAutoplay();
+    }
+
+    function nextSlide() {
+      showSlide(slideIndex + 1)
+    }
+
+    function previousSlide() {
+      showSlide(slideIndex - 1)
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      if (document.hidden || viewer.classList.contains("show")) return;
+      autoplayTimer = setInterval(nextSlide, AUTOPLAY_DELAY);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer !== null) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    showSlide(0, false);
+    startAutoplay();
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopAutoplay();
+      else startAutoplay();
+    });
+
+    /* =========================
+       SWIPE SLIDESHOW
+    ========================= */
+    let slideStartX = 0,
+      slideStartY = 0,
+      slideMoved = false;
+
+    slideshow.addEventListener("pointerdown", e => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      slideStartX = e.clientX;
+      slideStartY = e.clientY;
+      slideMoved = false;
+      if (slideshow.setPointerCapture) {
+        slideshow.setPointerCapture(e.pointerId);
+      }
+    });
+
+    slideshow.addEventListener("pointerup", e => {
+      const dx = e.clientX - slideStartX;
+      const dy = e.clientY - slideStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        slideMoved = true;
+        if (slides[slideIndex]) {
+          slides[slideIndex].setAttribute("data-swiped", "true");
+        }
+        dx < 0 ? nextSlide() : previousSlide();
+      }
+    });
+
+    slideshow.addEventListener("pointercancel", () => {
+      slideMoved = false
+    });
+
+    /* =========================
+       VIEWER
+    ========================= */
+    function updateViewer() {
+      viewerImg.style.opacity = "0";
+      const src = shuffled[viewerIndex];
+
+      preloadImage(src).finally(() => {
+        viewerImg.src = src;
+        viewerImg.alt = `Foto ${viewerIndex+1} dari ${shuffled.length}`;
+        requestAnimationFrame(() => viewerImg.style.opacity = "1");
+      });
+    }
+
+    function openViewer(index) {
+      viewerIndex = (index + shuffled.length) % shuffled.length;
+      stopAutoplay();
+      resetZoom();
+      updateViewer();
+      viewer.classList.add("show");
+      viewer.setAttribute("aria-hidden", "false");
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeViewer() {
+      viewer.classList.remove("show");
+      viewer.setAttribute("aria-hidden", "true");
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      resetZoom();
+      startAutoplay();
+    }
+
+    function viewerNextFn() {
+      viewerIndex = (viewerIndex + 1) % shuffled.length;
+      updateViewer();
+    }
+
+    function viewerPrevFn() {
+      viewerIndex = (viewerIndex - 1 + shuffled.length) % shuffled.length;
+      updateViewer();
+    }
+
+    document.getElementById("viewerClose").addEventListener("click", closeViewer);
+    document.getElementById("viewerNext").addEventListener("click", viewerNextFn);
+    document.getElementById("viewerPrev").addEventListener("click", viewerPrevFn);
+
+    viewer.addEventListener("click", e => {
+      if (e.target === viewer) closeViewer();
+    });
+
+    document.addEventListener("keydown", e => {
+      if (viewer.classList.contains("show")) {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          viewerNextFn()
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          viewerPrevFn()
+        } else if (e.key === "Escape") closeViewer();
+      } else if (e.key === "Escape") {
+        closeBiodata();
+      }
+    });
+
+    /* Viewer swipe + drag */
+    let viewerStartX = 0,
+      viewerStartY = 0,
+      viewerDragging = false,
+      viewerPointerId = null;
+    let viewerOffsetX = 0,
+      viewerOffsetY = 0,
+      viewerScale = 1;
+
+    function applyViewerTransform() {
+      viewerImg.style.transform = `translate3d(${viewerOffsetX}px,${viewerOffsetY}px,0) scale(${viewerScale})`;
+    }
+
+    function resetZoom() {
+      viewerScale = 1;
+      viewerOffsetX = 0;
+      viewerOffsetY = 0;
+      viewerImg.classList.remove("dragging");
+      applyViewerTransform();
+    }
+
+    viewerImg.addEventListener("pointerdown", e => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      viewerStartX = e.clientX;
+      viewerStartY = e.clientY;
+      viewerDragging = true;
+      viewerPointerId = e.pointerId;
+      viewerImg.classList.add("dragging");
+      if (viewerImg.setPointerCapture) {
+        viewerImg.setPointerCapture(e.pointerId);
+      }
+    });
+
+    viewerImg.addEventListener("pointermove", e => {
+      if (!viewerDragging || e.pointerId !== viewerPointerId) return;
+      const dx = e.clientX - viewerStartX;
+      const dy = e.clientY - viewerStartY;
+      if (viewerScale > 1) {
+        viewerOffsetX += dx;
+        viewerOffsetY += dy;
+        viewerStartX = e.clientX;
+        viewerStartY = e.clientY;
+        applyViewerTransform();
+      }
+    });
+
+    viewerImg.addEventListener("pointerup", e => {
+      if (!viewerDragging) return;
+      viewerDragging = false;
+      viewerImg.classList.remove("dragging");
+
+      const dx = e.clientX - viewerStartX;
+      const dy = e.clientY - viewerStartY;
+
+      if (viewerScale <= 1 && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        dx < 0 ? viewerNextFn() : viewerPrevFn();
+      }
+    });
+    viewerImg.addEventListener("pointercancel", () => {
+      viewerDragging = false;
+      viewerImg.classList.remove("dragging");
+    });
+
+    viewerImg.addEventListener("dblclick", () => {
+      viewerScale = viewerScale === 1 ? 1.8 : 1;
+      viewerOffsetX = 0;
+      viewerOffsetY = 0;
+      applyViewerTransform();
+    });
+
+    /* =========================
+       MUSIK
+    ========================= */
+    async function playMusic() {
+      try {
+        await music.play();
+        musicWanted = true;
+        setButtonLabel();
+      } catch (error) {
+        musicWanted = false;
+        setButtonLabel();
+        showToast("Maroon 5 - This Love [XPpTgCho5ZA].mp3");
+        console.error(error);
+      }
+    }
+
+    function pauseMusic() {
+      music.pause();
+      musicWanted = false;
+      setButtonLabel();
+    }
+
+    musicBtn.addEventListener("click", () => {
+      music.paused ? playMusic() : pauseMusic();
+    });
+
+    music.addEventListener("play", setButtonLabel);
+    music.addEventListener("pause", setButtonLabel);
+    music.addEventListener("error", () => {
+      showToast("Maroon 5 - This Love [XPpTgCho5ZA].mp3");
+    });
+
+    /* Browser memblokir autoplay sebelum interaksi.
+       Setelah interaksi pertama, kita coba sekali. */
+    let firstInteractionHandled = false;
+    async function firstInteraction() {
+      if (firstInteractionHandled) return;
+      firstInteractionHandled = true;
+      if (!musicWanted && music.paused) await playMusic();
+    }
+    document.addEventListener("pointerdown", firstInteraction, {
+      once: true,
+      passive: true
+    });
+
+    /* =========================
+       BIODATA
+    ========================= */
+    function openBiodata() {
+      biodataPopup.classList.add("show");
+      biodataBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeBiodata() {
+      biodataPopup.classList.remove("show");
+      biodataBtn.setAttribute("aria-expanded", "false");
+    }
+    biodataBtn.addEventListener("click", () => {
+      biodataPopup.classList.contains("show") ? closeBiodata() : openBiodata();
+    });
+    document.querySelector(".closePopupBtn").addEventListener("click", closeBiodata);
+
+    document.addEventListener("click", e => {
+      if (biodataPopup.classList.contains("show") &&
+        !biodataPopup.contains(e.target) &&
+        e.target !== biodataBtn) {
+        closeBiodata();
+      }
+    });
+
+    /* =========================
+       CANVAS BINTANG
+    ========================= */
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d", {
+      alpha: false
+    });
+    let stars = [];
+    let animationId = null;
+    let canvasW = 0,
+      canvasH = 0,
+      dpr = 1;
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvasW = window.innerWidth;
+      canvasH = window.innerHeight;
+      canvas.width = Math.floor(canvasW * dpr);
+      canvas.height = Math.floor(canvasH * dpr);
+      canvas.style.width = canvasW + "px";
+      canvas.style.height = canvasH + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(150, Math.max(55, Math.floor(canvasW * canvasH / 11000)));
+      stars = Array.from({
+        length: count
+      }, () => ({
+        x: Math.random() * canvasW,
+        y: Math.random() * canvasH,
+        r: Math.random() * 1.25 + .2,
+        speed: Math.random() * .45 + .08,
+        alpha: Math.random() * .7 + .25,
+        twinkle: Math.random() * .035 + .005
+      }));
+    }
+
+    function drawStars() {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvasW, canvasH);
+
+      for (const s of stars) {
+        s.y += s.speed;
+        if (s.y > canvasH + 3) {
+          s.y = -3;
+          s.x = Math.random() * canvasW
+        }
+
+        s.alpha += s.twinkle * (Math.random() > .5 ? 1 : -1);
+        s.alpha = Math.max(.15, Math.min(1, s.alpha));
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        ctx.fill();
+      }
+
+      if (!document.hidden && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        animationId = requestAnimationFrame(drawStars);
+      }
+    }
+
+    function startStars() {
+      cancelAnimationFrame(animationId);
+      drawStars();
+    }
+    window.addEventListener("resize", resizeCanvas, {
+      passive: true
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) cancelAnimationFrame(animationId);
+      else startStars();
+    });
+    resizeCanvas();
+    startStars();
+
+    /* Hindari klik viewer/biodata memengaruhi slideshow */
+    viewerImg.addEventListener("dragstart", e => e.preventDefault());
+
+    /* Status awal */
+    setButtonLabel();
+  </script>
+</body>
+
 </html>
